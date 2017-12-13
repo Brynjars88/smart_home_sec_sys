@@ -19,6 +19,7 @@
 #include "temboo_wifi_config.h"
 
 /************************ Example Starts Here *******************************/
+#include <Temboo.h>
 #include <Adafruit_Sensor.h>
 #include <DHT.h>
 #include <DHT_U.h>
@@ -26,7 +27,7 @@
 #include <SPI.h>
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
-#include <Temboo.h>
+
 
 WiFiClient client;
 
