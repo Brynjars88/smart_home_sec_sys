@@ -7,18 +7,20 @@ import smtplib
 from smtplib import SMTP, SMTPException
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
+from gpiozero import LED
 
 
-with picamera.PiCamera() as camera:
-	camera.resolution = (1024, 768)
-	camera.start_preview()
-	# Camera warm-up time
-	time.sleep(2)
-	camera.capture('photo.jpg')
+def main():
+	with picamera.PiCamera() as camera:
+		camera.resolution = (1024, 768)
+		camera.start_preview()
+		# Camera warm-up time
+		time.sleep(2)
+		camera.capture('photo.jpg')
 
-f_time = datetime.now().strftime('%a %d %b @ %H:%M')
+	f_time = datetime.now().strftime('%a %d %b @ %H:%M')
 
-toaddr = 'iotsecsys@gmail.com' 
+	toaddr = 'iotsecsys@gmail.com' 
 me = 'iotsecsys@gmail.com'
 subject = 'Motion detected: ' + f_time
 
@@ -44,3 +46,6 @@ try:
 	s.quit()
 except SMTPException as e:
 	print("Error: unable to send email : {err}".format(err=e))
+
+if __name__ == '__main__':
+	main()
