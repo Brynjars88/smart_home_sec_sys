@@ -29,6 +29,7 @@ DHT_Unified dht(DATA_PIN, DHT22);  // create DHT22 instance
 /****** Motion sensor ******/
 int ledPin = 15;                // choose the pin for the LED
 int inputPin = 12;              // choose the input pin (for PIR sensor)
+int signalPin = 0;              // Set to HIGH to take a picture
 int pirState = LOW;             // we start, assuming no motion detected
 int val = 0;                    // variable for reading the pin status
 bool email_sent = false;
@@ -37,6 +38,7 @@ bool email_sent = false;
 void setup() {
   pinMode(ledPin, OUTPUT);      // declare LED as output
   pinMode(inputPin, INPUT);     // declare sensor as input
+  pinMode(signalPin, OUTPUT);   // declare signalpin as output
 
   Serial.begin(9600);
   delay(4000);  // buy time for a human to open the serial window
@@ -113,6 +115,7 @@ void loop() {
   val = digitalRead(inputPin);    // read input value
   if (val == HIGH) {              // check if the input is HIGH
     digitalWrite(ledPin, HIGH);   // turn LED ON
+    digitalWrite(signalPin, HIGH); // send signal to take a picture
     if (pirState == LOW) {
       // we have just turned on
       Serial.println("Motion detected!");
@@ -129,6 +132,7 @@ void loop() {
     }
   } else {
     digitalWrite(ledPin, LOW); // turn LED OFF
+    digitalWrite(signalPin, LOW); // we dont want to take a picture...
     if (pirState == HIGH) {
       // we have just turned of
       Serial.println("Motion ended!");
