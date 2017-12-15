@@ -39,32 +39,58 @@ void setup() {
   pinMode(ledPin, OUTPUT);      // declare LED as output
   pinMode(inputPin, INPUT);     // declare sensor as input
   pinMode(signalPin, OUTPUT);   // declare signalpin as output
+  
+  oled.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3C (for the 128x32)
+  oled.display();
+  
+  // text display tests
+  oled.setTextSize(1);
+  oled.setTextColor(WHITE);
 
   Serial.begin(9600);
   delay(4000);  // buy time for a human to open the serial window
 
-  Serial.println("start of temboo test");
+   // print it to the OLED
+  oled.clearDisplay();
+  oled.setCursor(0, 0);
 
+  oled.display();
+  delay(2000);
+
+  Serial.println("start of temboo test");
+  oled.clearDisplay();
+  oled.setCursor(0, 0);
+  oled.print("Waiting For WiFi connection: ");
+  oled.display();
+
+  int counter = 0;
   // Try to connect to the local WiFi network
   WiFi.begin(WIFI_SSID, WPA_PASSWORD);
   while (WiFi.status() != WL_CONNECTED) { // wait for the loging process to complete
-    delay(500);
+    delay(1500);
     Serial.print(".");
+    oled.print(".");
+    oled.display();
+    counter = counter + 1;
+      if(counter > 3)
+      {
+         oled.clearDisplay();
+         oled.setCursor(0, 0);
+         oled.print("Waiting For WiFi connection: ");
+         counter = 0;
+      }
   }
   Serial.println("");
   Serial.print("WiFi connected - IP address of ESP8266 is:");
   Serial.println(WiFi.localIP());
-  delay(3000);
-
-  oled.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3C (for the 128x32)
+  oled.clearDisplay();
+  oled.print("Connected To IoT-research !");
   oled.display();
+
+  delay(3000);
 
   // initialize dht22
   dht.begin();
-
-  // text display tests
-  oled.setTextSize(1);
-  oled.setTextColor(WHITE);
 }
 
 
