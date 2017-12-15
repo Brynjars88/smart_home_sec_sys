@@ -56,7 +56,7 @@ def main():
 	while(True):
 		pinIn = GPIO.input(PIN)
 		if pinIn:
-			print("Saw input: " + pinIn)
+			print("Saw input: ", pinIn)
 			print("Taking a picture!")
 			take_picture()
 			print("Sending an email!")
