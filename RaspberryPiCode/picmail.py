@@ -61,7 +61,8 @@ def main():
 			take_picture()
 			print("Sending an email!")
 			send_email()
-			time.sleep(2)
+			print("Done! Sleeping for 15 seconds.")
+			time.sleep(15)
 
 if __name__ == '__main__':
 	main()
