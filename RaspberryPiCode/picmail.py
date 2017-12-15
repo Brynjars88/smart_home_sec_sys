@@ -54,8 +54,12 @@ def send_email():
 
 def main():
 	while(True):
-		if GPIO.input(PIN):
+		pinIn = GPIO.input(PIN)
+		if pinIn:
+			print("Saw input: " + pinIn)
+			print("Taking a picture!")
 			take_picture()
+			print("Sending an email!")
 			send_email()
 			time.sleep(2)
 
